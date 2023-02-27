@@ -16,9 +16,17 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@component/*": ["./src/*"]
+      "@components/*": ["./src/components/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "__tests__/signup.test.jsx",
+    "__tests__/signup.test.jsx"
+  ],
   "exclude": ["node_modules"]
 }

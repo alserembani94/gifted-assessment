@@ -1,0 +1,16 @@
+.button {
+  --primary: #b20f29;
+  --primary-text: white;
+  padding: 12px 32px;
+  width: 100%;
+  background-color: var(--primary);
+  border-radius: 2rem;
+  color: var(--primary-text);
+  text-align: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+  --hover: black;
+  background-color: var(--hover);
+}
