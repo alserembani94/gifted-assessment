@@ -12,7 +12,7 @@ type Props = {
  * @description Here I intentionally use different approach
  * in styling. Using module CSS, I have to write vanilla CSS.
  * In real use case, these should be standardised for more
- * extensive scalability, such as design system.
+ * maintainability and extensive scalability, such as design system.
  *
  * Other thing to note, that I create this component, with in mind
  * that I want to standardised a button that behaves like anchor.

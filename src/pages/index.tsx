@@ -5,10 +5,16 @@ import Input from "@components/Input";
 import PasswordStrengthIndicator from "@components/PasswordStrengthIndicator";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "@components/Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { benchmarkPassword } from "@utils/passwordAssessor";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const bitter = Bitter({ subsets: ["latin"] });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 type Inputs = {
   fullName: string;
@@ -16,23 +22,41 @@ type Inputs = {
   password: string;
 };
 
+const schema = z
+  .object({
+    fullName: z.string().min(1),
+    email: z.string().email().min(1),
+    password: z.string().min(1),
+  })
+  .refine((data) => {
+    const { score, totalScore } = benchmarkPassword(data.password);
+    return score === totalScore;
+  });
+
 export default function Home() {
+  const [showBenchmark, setShowBenchmark] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
-    getValues,
     setFocus,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: zodResolver(schema),
+  });
+  const { score, totalScore } = benchmarkPassword(watch("password"));
+
+  useEffect(() => {
+    setFocus("fullName");
+  }, [setFocus]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
   };
 
-  useEffect(() => {
-    setFocus("fullName");
-  }, []);
+  const handleShowBenchmark = (open: boolean) => {
+    setShowBenchmark(open);
+  };
 
   return (
     <main
@@ -65,13 +89,23 @@ export default function Home() {
         />
         <Input
           register={register("password")}
+          onFocus={() => handleShowBenchmark(true)}
+          onBlur={() => handleShowBenchmark(false)}
           id="password"
           label="Password"
           type="password"
           isStretched
         />
-        <PasswordStrengthIndicator password={watch("password")} />
-        <Button id="submit">CONTINUE</Button>
+        <PasswordStrengthIndicator
+          password={watch("password")}
+          isOpen={showBenchmark}
+        />
+        <Button
+          id="submit"
+          disabled={!!errors.fullName || !!errors.email || score !== totalScore}
+        >
+          CONTINUE
+        </Button>
       </form>
     </main>
   );
