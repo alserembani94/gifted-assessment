@@ -44,6 +44,9 @@ module.exports = {
           fontWeight: theme("fontWeight.bold"),
           lineHeight: theme("lineHeight.tight"),
         },
+        label: {
+          fontWeight: theme("fontWeight.semibold"),
+        },
       });
     })
   ],

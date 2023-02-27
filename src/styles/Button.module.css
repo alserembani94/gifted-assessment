@@ -14,3 +14,8 @@
   --hover: black;
   background-color: var(--hover);
 }
+
+.button:disabled {
+  --disabled: gray;
+  background-color: var(--disabled);
+}
