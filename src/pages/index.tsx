@@ -71,7 +71,7 @@ export default function Home() {
           isStretched
         />
         <PasswordStrengthIndicator password={watch("password")} />
-        <Button>CONTINUE</Button>
+        <Button id="submit">CONTINUE</Button>
       </form>
     </main>
   );

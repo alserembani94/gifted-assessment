@@ -3,6 +3,7 @@ import styles from "@styles/Button.module.css";
 
 type Props = {
   href?: string;
+  id?: string;
   children: string | JSX.Element | JSX.Element[];
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -19,17 +20,17 @@ type Props = {
  * styling with the `<Button>`.
  */
 
-const Button: React.FC<Props> = ({ href, children, ...props }) => {
+const Button: React.FC<Props> = ({ href, children, id, ...props }) => {
   if (href) {
     return (
-      <a href={href} className={styles.button}>
+      <a href={href} id={id} className={styles.button}>
         {children}
       </a>
     );
   }
 
   return (
-    <button className={styles.button} {...props}>
+    <button className={styles.button} id={id} {...props}>
       {children}
     </button>
   );
